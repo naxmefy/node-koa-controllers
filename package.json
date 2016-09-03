@@ -1,6 +1,6 @@
 {
   "name": "@naxmefy/koa-controllers",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "koa2 controllers",
   "main": "lib/index.js",
   "repository": {
