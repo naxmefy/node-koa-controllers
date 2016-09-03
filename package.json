@@ -1,0 +1,82 @@
+{
+  "name": "@naxmefy/koa-controllers",
+  "version": "0.0.0",
+  "description": "koa2 controllers",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:naxmefy/node-koa-controllers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/naxmefy/node-koa-controllers/issues"
+  },
+  "homepage": "https://github.com/naxmefy/node-koa-controllers#readme",
+  "scripts": {
+    "clean": "rimraf lib",
+    "compile": "babel src -d lib --copy-files --source-maps",
+    "build": "npm run clean && npm run compile",
+    "coverage": "nyc report --reporter=lcov",
+    "lint": "eslint src",
+    "lint:fix": "npm run lint -- --fix",
+    "prepublish": "npm run build",
+    "test": "better-npm-run test"
+  },
+  "betterScripts": {
+    "test": {
+      "command": "nyc mocha test",
+      "env": {
+        "NODE_ENV": "test",
+        "DEBUG": "app:*,test*"
+      }
+    }
+  },
+  "nyc": {
+    "sourceMap": false,
+    "instrument": false,
+    "exclude": [
+      ".git",
+      ".nyc_output",
+      "dist",
+      "coverage",
+      "node_modules/**",
+      "test"
+    ]
+  },
+  "engines": {
+    "node": ">= 4.x"
+  },
+  "author": "MRW Neundorf <m.neundorf@live.de>",
+  "license": "MIT",
+  "dependencies": {
+    "koa-compose": "^3.1.0",
+    "lodash": "^4.15.0"
+  },
+  "devDependencies": {
+    "babel-cli": "6.11.4",
+    "babel-core": "6.13.2",
+    "babel-eslint": "6.1.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-istanbul": "2.0.0",
+    "babel-plugin-transform-runtime": "6.12.0",
+    "babel-preset-es2015": "6.13.2",
+    "babel-preset-stage-0": "6.5.0",
+    "babel-register": "6.11.6",
+    "babel-runtime": "6.11.6",
+    "better-npm-run": "0.0.10",
+    "bluebird": "^3.4.6",
+    "co-mocha": "^1.1.3",
+    "eslint": "3.3.1",
+    "eslint-config-standard": "5.3.5",
+    "eslint-plugin-babel": "3.3.0",
+    "eslint-plugin-promise": "2.0.1",
+    "eslint-plugin-standard": "2.0.0",
+    "koa": "^2.0.0-alpha.6",
+    "koa-bodyparser": "^3.2.0",
+    "koa-router": "^7.0.1",
+    "mocha": "^3.0.2",
+    "nyc": "8.1.0",
+    "rimraf": "^2.5.4",
+    "should": "11.1.0",
+    "supertest": "^2.0.0"
+  }
+}

@@ -1,0 +1,7 @@
+--ui bdd
+--reporter spec
+--recursive
+--colors
+--compilers js:babel-register
+--require co-mocha
+--require should

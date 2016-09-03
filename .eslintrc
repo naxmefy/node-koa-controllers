@@ -1,0 +1,23 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "standard"
+  ],
+  "plugins": [
+    "babel",
+    "promise"
+  ],
+  "env": {
+    "node": true
+  },
+  "globals": {
+  },
+  "rules": {
+    "max-len": [
+      2,
+      120,
+      2
+    ],
+    "generator-star-spacing": 0
+  }
+}
