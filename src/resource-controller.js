@@ -5,6 +5,11 @@ export default class ResourceController extends AppController {
   init () {
     super.init()
     this.addFilter(['show', 'update', 'destroy'], 'setDocument')
+    this.index = this.index.bind(this);
+    this.create = this.create.bind(this);
+    this.show = this.show.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   afterInit () {
