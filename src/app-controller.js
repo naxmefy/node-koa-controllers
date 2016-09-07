@@ -11,6 +11,8 @@ export default class AppController {
     this._actionFilters = {}
     this.body = null
     this.autoBodyResponse = true
+
+    this.automaticResponse.bind(this)
   }
 
   afterInit () {
@@ -31,15 +33,15 @@ export default class AppController {
 
       methods.forEach(method => {
         if (_.isString(method) === false) {
-          this.actionFilters[action].push(method.bind(this))
+          this.actionFilters[action].push(method)
         } else {
-          this.actionFilters[action].push(this[method].bind(this))
+          this.actionFilters[action].push(this[method])
         }
       })
     })
   }
 
-  async automaticResponseOfState (ctx, next) {
+  async automaticResponse (ctx, next) {
     await next()
     if (this.autoBodyResponse !== false) {
       if (this.body instanceof Error) {
@@ -55,16 +57,18 @@ export default class AppController {
     this.body = o
   }
 
+  runBefore (action) {
+    action = _.isFunction(action) ? action.name : action
+    return koaCompose([
+      this.automaticResponse,
+      koaCompose(this.actionFilters[action] || [])
+    ])
+  }
+
   run (action) {
     action = _.isFunction(action) ? action.name : action
     return koaCompose([
-      // async function (ctx, next) {
-      //   ctx.action = action
-      //   ctx.actionName = `${_.findKey(ctx.app.context.controllers, this)}.${action}`
-      //   await next()
-      // },
-      this.automaticResponseOfState.bind(this),
-      koaCompose(this.actionFilters[action] || []),
+      this.runBefore(action),
       this[action].bind(this)
     ])
   }
