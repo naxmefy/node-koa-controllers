@@ -34,12 +34,20 @@ class ModelMock {
       return res(this)
     })
   }
+
+  validateSync () {
+    return void 0
+  }
 }
 class ErrorModelMock extends ModelMock {
   save () {
     return new Promise((res, rej) => {
       return rej(new Error('just an error'))
     })
+  }
+
+  validateSync () {
+    return void 0 //new Error('just an error')
   }
 }
 
@@ -65,14 +73,14 @@ const router = new KoaRouter()
 const cInstance = new ModelsController()
 const eInstance = new ErrorModelsController()
 
-router.get('/models', cInstance.run(cInstance.index))
-router.post('/models', cInstance.run(cInstance.create))
-router.get('/models/1', cInstance.run(cInstance.show))
-router.put('/models/1', cInstance.run(cInstance.update))
-router.delete('/models/1', cInstance.run(cInstance.destroy))
+router.get('/models', cInstance.index)
+router.post('/models', cInstance.create)
+router.get('/models/1', cInstance.show)
+router.put('/models/1', cInstance.update)
+router.delete('/models/1', cInstance.destroy)
 
-router.post('/errormodels', eInstance.run(eInstance.create))
-router.put('/errormodels/1', eInstance.run(eInstance.update))
+router.post('/errormodels', eInstance.create)
+router.put('/errormodels/1', eInstance.update)
 app.use(router.routes(), router.allowedMethods())
 
 const request = supertest(app.listen())

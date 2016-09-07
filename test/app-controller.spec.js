@@ -6,7 +6,13 @@ import {AppController} from '../src'
 class SubController extends AppController {
   init() {
     super.init()
+
+    this.beforeTest = this.beforeTest.bind(this)
+
     this.addFilter('test', this.beforeTest)
+
+    this.test = this.run(this.test)
+    this.error = this.run(this.error)
   }
 
   async beforeTest (ctx, next) {
@@ -15,7 +21,7 @@ class SubController extends AppController {
   }
 
   async test (ctx) {
-    this.respond(ctx.request.testLabel)
+    this.body = ctx.request.testLabel
   }
 
   async error () {
@@ -29,8 +35,8 @@ const app = new Koa()
 const router = new KoaRouter()
 const cInstance = new SubController()
 
-router.get('/test', cInstance.run('test'))
-router.get('/error', cInstance.run('error'))
+router.get('/test', cInstance.test)
+router.get('/error', cInstance.error)
 app.use(router.routes(), router.allowedMethods())
 
 const request = supertest(app.listen())

@@ -14,8 +14,6 @@ export default class ResourceController extends AppController {
     this.show = this.run(this.show);
     this.update = this.run(this.update);
     this.destroy = this.run(this.destroy);
-
-
   }
 
   afterInit () {
@@ -31,11 +29,17 @@ export default class ResourceController extends AppController {
 
   async create (ctx) {
     const document = new this.Model(ctx.request.body)
-    this.body = await document.save()
-            .catch(error => {
-              error.status = 400
-              return error
-            })
+    const error = document.validateSync()
+    if(error) {
+      error.status = 400
+      this.body = error
+    } else {
+      this.body = await document.save()
+        .catch(error => {
+          error.status = 400
+          return error
+        })
+    }
   }
 
   async show (ctx) {

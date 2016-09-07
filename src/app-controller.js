@@ -3,16 +3,19 @@ import * as _ from 'lodash'
 
 export default class AppController {
   constructor () {
+    this._actionFilters = {}
+    this.body = null
+    this.autoBodyResponse = true
+
+    this.automaticResponse = this.automaticResponse.bind(this)
+    this.runBefore = this.runBefore.bind(this)
+    this.run = this.run.bind(this)
+
     this.init()
     this.afterInit()
   }
 
   init () {
-    this._actionFilters = {}
-    this.body = null
-    this.autoBodyResponse = true
-
-    this.automaticResponse.bind(this)
   }
 
   afterInit () {
@@ -51,10 +54,6 @@ export default class AppController {
       // TODO: maybe enhance required
       ctx.body = this.body
     }
-  }
-
-  respond (o) {
-    this.body = o
   }
 
   runBefore (action) {
