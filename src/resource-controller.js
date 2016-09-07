@@ -10,6 +10,7 @@ export default class ResourceController extends AppController {
     this.show = this.show.bind(this);
     this.update = this.update.bind(this);
     this.destroy = this.destroy.bind(this);
+    this.setDocument = this.setDocument.bind(this);
   }
 
   afterInit () {
